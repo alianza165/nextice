@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import API from "./API";
+import API from '../utils/API';
 import { useTable } from 'react-table';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Input, Box, Typography } from '@mui/material';

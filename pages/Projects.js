@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TextField, Typography } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
-import API from "./API";
+import API from '../utils/API';
 import TableSortLabel from "@mui/material/TableSortLabel";
 
 function Projects() {

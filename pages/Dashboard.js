@@ -26,8 +26,8 @@ import ComplexStatisticsCard from "./examples/Cards/StatisticsCards/ComplexStati
 
 // Dashboard components
 import API from "./API";
-import Projects from "./projects";
-import OrdersOverview from "./ordersoverview";
+import Projects from "./Projects";
+import OrdersOverview from "./OrdersOverview";
 import { useState, useEffect } from "react";
 
 

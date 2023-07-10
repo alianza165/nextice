@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import Icecream from './icecream';
-import Items from './items';
-import Dashboard from './dashboard';
-import Sidebar from './components/sidebar';
+import Icecream from './Icecream';
+import Items from './Items';
+import Dashboard from './Dashboard';
+import Sidebar from './components/Sidebar';
 
 import { withAuthenticator, Button } from "@aws-amplify/ui-react";
 import Auth from '@aws-amplify/auth';

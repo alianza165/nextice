@@ -6,6 +6,9 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import MDBox from "./components/MDBox";
+import MDTypography from "./components/MDTypography";
+import MDBadge from "./components/MDBadge";
 
 function Items() {
   useEffect(() => {
@@ -110,21 +113,21 @@ function Items() {
     {
       field: 'status',
       headerName: (
-        <Typography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
+        <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
           STATUS
-        </Typography>
+        </MDTypography>
       ),
       width: 80,
       cellClassName: 'table-cell',
       renderCell: (params) => (
         params.row.running_low ? (
-          <Box>
-            <Badge badgeContent="" color="error" variant="gradient" size="sm" />
-          </Box>
+          <MDBox>
+            <MDBadge badgeContent="" color="error" variant="gradient" size="sm" />
+          </MDBox>
         ) : (
-          <Box>
-            <Badge badgeContent="" color="success" variant="gradient" size="sm" />
-          </Box>
+          <MDBox>
+            <MDBadge badgeContent="" color="success" variant="gradient" size="sm" />
+          </MDBox>
         )
       ),
     },
@@ -132,42 +135,42 @@ function Items() {
       field: 'item',
       cellClassName: 'table-cell',
       headerName: (
-        <Typography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
+        <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
           ITEM
-        </Typography>
+        </MDTypography>
       ),
       width: 250,
       renderCell: (params) => (
-        <Box display="flex" alignItems="center" lineHeight={1}>
-          <Typography variant="body2" fontWeight="medium" ml={1} lineHeight={1}>
+        <MDBox display="flex" alignItems="center" lineHeight={1}>
+          <MDTypography variant="body2" fontWeight="medium" ml={1} lineHeight={1}>
             {params.row.item}
-          </Typography>
-        </Box>
+          </MDTypography>
+        </MDBox>
       ),
     },
     {
       field: 'product_type',
       cellClassName: 'table-cell',
       headerName: (
-        <Typography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
+        <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
           PRODUCT TYPE
-        </Typography>
+        </MDTypography>
       ),
       width: 220,
       renderCell: (params) => (
-        <Box display="flex" alignItems="center" lineHeight={1}>
-          <Typography variant="button" fontWeight="Regular" ml={1} lineHeight={1}>
+        <MDBox display="flex" alignItems="center" lineHeight={1}>
+          <MDTypography variant="button" fontWeight="Regular" ml={1} lineHeight={1}>
             {params.row.product_type}
-          </Typography>
-        </Box>
+          </MDTypography>
+        </MDBox>
       ),
     },
     {
       field: 'action',
       headerName: (
-        <Typography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
+        <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
           QUANTITY
-        </Typography>
+        </MDTypography>
       ),
       width: 120,
       cellClassName: 'table-cell',
@@ -181,9 +184,9 @@ function Items() {
       field: 'measuring_unit',
       cellClassName: 'table-cell',
       headerName: (
-        <Typography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
+        <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
           MEASURING UNIT
-        </Typography>
+        </MDTypography>
       ),
       width: 180,
       renderCell: (params) => (
@@ -196,17 +199,17 @@ function Items() {
       field: 'company',
       cellClassName: 'table-cell',
       headerName: (
-        <Typography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
+        <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
           COMPANY
-        </Typography>
+        </MDTypography>
       ),
       width: 180,
       renderCell: (params) => (
-        <Box display="flex" alignItems="center" lineHeight={1}>
-          <Typography variant="button" fontWeight="Regular" ml={1} lineHeight={1}>
+        <MDBox display="flex" alignItems="center" lineHeight={1}>
+          <MDTypography variant="button" fontWeight="Regular" ml={1} lineHeight={1}>
             {params.row.company}
-          </Typography>
-        </Box>
+          </MDTypography>
+        </MDBox>
       ),
     },
   ];
@@ -235,18 +238,19 @@ function Items() {
   };
 
   return (
-    <Box pt={6} pb={3}>
+    <div>
+      <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <Card>
-              <Box sx={{ p: 2, backgroundColor: 'primary.dark' }}>
-              <Typography variant="h6" color="white">
-                Items
-              </Typography>
-            </Box>
+              <MDBox mx={2} mt={-3} py={3} px={2} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info">
+                <MDTypography variant="h6" color="white">
+                  Items
+                </MDTypography>
+              </MDBox>
               <Grid container>
                 <Grid item xs={12} md={3}>
-                  <Box pt={2} px={3}>
+                  <MDBox pt={2} px={3}>
                     <Autocomplete
                       disablePortal
                       id="combo-box-demo"
@@ -255,22 +259,22 @@ function Items() {
                       sx={{ width: 200 }}
                       renderInput={(params) => <TextField {...params} label="Items" />}
                     />
-                  </Box>
+                  </MDBox>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Box pt={3} px={3}>
+                  <MDBox pt={3} px={3}>
                     <TextField id="search" label="Search" value={searchQuery} onChange={handleInputChange} />
-                  </Box>
+                  </MDBox>
                 </Grid>
               </Grid>
-              <Box pt={2} px={3}>
+              <MDBox pt={2} px={3}>
                 <DataGrid density="compact" rows={filteredItems} columns={columns} components={{ Toolbar: GridToolbar }} />
-              </Box>
+              </MDBox>
             </Card>
           </Grid>
           <Grid item xs={12}></Grid>
         </Grid>
-      
+      </MDBox>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit Item</DialogTitle>
         <DialogContent>
@@ -332,7 +336,7 @@ function Items() {
           </form>
         </DialogContent>
       </Dialog>
-      </Box>
+      </div>
   );
 }
 

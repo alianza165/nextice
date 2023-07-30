@@ -20,6 +20,12 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import MDBox from "../../../../components/MDBox";
+import MDInput from "../../../../components/MDInput";
+import MDTypography from "../../../../components/MDTypography";
+
+
 
 // Material Dashboard 2 React components
 import { Box, Typography } from '@mui/material';
@@ -27,8 +33,8 @@ import { Box, Typography } from '@mui/material';
 function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
   return (
     <Card>
-      <Box display="flex" justifyContent="space-between" pt={1} px={2}>
-        <Box
+      <MDBox display="flex" justifyContent="space-between" pt={1} px={2}>
+        <MDBox
           variant="gradient"
           bgColor={color}
           color={color === "light" ? "dark" : "white"}
@@ -41,17 +47,15 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
           height="4rem"
           mt={-3}
         >
-          <Icon fontSize="medium" color="inherit">
-            {icon}
-          </Icon>
-        </Box>
-        <Box textAlign="right" lineHeight={1.25}>
-          <Typography variant="button" fontWeight="light" color="text">
+          <TrendingDownIcon class="z-99"/>
+        </MDBox>
+        <MDBox textAlign="right" lineHeight={1.25}>
+          <MDTypography variant="button" fontWeight="light" color="text">
             {title}
-          </Typography>
-          <Typography variant="h4">{count}</Typography>
-        </Box>
-      </Box>
+          </MDTypography>
+          <MDTypography variant="h4">{count}</MDTypography>
+        </MDBox>
+      </MDBox>
       <Divider />
     </Card>
   );

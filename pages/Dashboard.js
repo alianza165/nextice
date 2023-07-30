@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
+ 
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -21,6 +21,12 @@ import { Box, Typography } from '@mui/material';
 
 // Material Dashboard 2 React example components
 import ComplexStatisticsCard from "./examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import DashboardLayout from "./examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "./examples/Navbars/DashboardNavbar";
+import { MaterialUIControllerProvider } from "./context";
+
+
+
 
 // Data
 
@@ -153,14 +159,17 @@ const fetchIcecreamsRunningLow = (icecreams) => {
 
  
   return (
+    <MaterialUIControllerProvider>
+    
     <Box py={3}>
       <Box py={3}>
         <Grid container spacing={3}>
+
           <Grid item xs={12} md={6} lg={3}>
             <Box mb={1.5}>
               <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
+                color="info"
+                icon="AcUnitTwoToneIcon"
                 title="ICECREAM RUNNING LOW"
                 count={icecreamsRunningLow}
                 percentage={{
@@ -174,9 +183,73 @@ const fetchIcecreamsRunningLow = (icecreams) => {
           <Grid item xs={12} md={6} lg={3}>
             <Box mb={1.5}>
               <ComplexStatisticsCard
+                color="warning"
+                icon="weekend"
+                title="FRUITS RUNNING LOW"
+                count='0'
+                percentage={{
+                  color: "success",
+                  amount: "+55%",
+                  label: "than lask week",
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <Box mb={1.5}>
+              <ComplexStatisticsCard
+                color="error"
+                icon="store"
+                title="CUPS (ICECREAM) RUNNING LOW"
+                count='0'
+                percentage={{
+                  color: "success",
+                  amount: "+1%",
+                  label: "than yesterday",
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <Box mb={1.5}>
+              <ComplexStatisticsCard
+                color="secondary"
+                icon="icecream"
+                title="REGISTER COINS RUNNING LOW"
+                count={coinsRunningLowCount}
+                percentage={{
+                  color: "success",
+                  amount: "",
+                  label: "Just updated",
+                }}
+              />
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={3} py={2}>
+          <Grid item xs={12} md={6} lg={3}>
+            <Box mb={1.5}>
+              <ComplexStatisticsCard
+                color="success"
                 icon="leaderboard"
                 title="WEBSTRAURANT RUNNING LOW"
                 count={webstaurantRunningLowCount}
+                percentage={{
+                  color: "success",
+                  amount: "+3%",
+                  label: "than last month",
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <Box mb={1.5}>
+              <ComplexStatisticsCard
+                color="success"
+                icon="leaderboard"
+                title="PRIMIZIE RUNNING LOW"
+                count={primizieRunningLowCount}
                 percentage={{
                   color: "success",
                   amount: "+3%",
@@ -203,69 +276,7 @@ const fetchIcecreamsRunningLow = (icecreams) => {
           <Grid item xs={12} md={6} lg={3}>
             <Box mb={1.5}>
               <ComplexStatisticsCard
-                color="primary"
-                icon="icecream"
-                title="REGISTER COINS RUNNING LOW"
-                count={coinsRunningLowCount}
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
-              />
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3} py={2}>
-          <Grid item xs={12} md={6} lg={3}>
-            <Box mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="FRUITS RUNNING LOW"
-                count='0'
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <Box mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="PRIMIZIE RUNNING LOW"
-                count={primizieRunningLowCount}
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <Box mb={1.5}>
-              <ComplexStatisticsCard
                 color="success"
-                icon="store"
-                title="CUPS (ICECREAM) RUNNING LOW"
-                count='0'
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <Box mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
                 icon="icecream"
                 title="AMAZON RUNNING LOW"
                 count={amazonRunningLowCount}
@@ -291,6 +302,7 @@ const fetchIcecreamsRunningLow = (icecreams) => {
         </Box>
       </Box>
     </Box>
+    </MaterialUIControllerProvider>
   );
 }
 

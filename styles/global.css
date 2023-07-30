@@ -1,3 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
 .amplify-tabs {
   display: none;
 }
@@ -5,4 +13,9 @@
 .table-cell {
   border: 0.1px solid #ccc;
   padding: 1px;
+}
+
+.active {
+  background-color: #4a5568; /* Customize the background color for the active link */
+  color: #f7fafc; /* Customize the text color for the active link */
 }

@@ -50,6 +50,12 @@ const handleItemClick = (page) => {
         </ListItemIcon>
         <ListItemText primary="Items" />
       </ListItemButton>
+      <ListItemButton selected={props.activePage === 'items2'} onClick={() => handleItemClick('items2')}>
+        <ListItemIcon>
+          <MailIcon />
+        </ListItemIcon>
+        <ListItemText primary="Items2" />
+      </ListItemButton>
       <ListItemButton selected={props.activePage === 'dashboard'} onClick={() => handleItemClick('dashboard')}>
         <ListItemIcon>
           <MailIcon />

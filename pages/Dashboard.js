@@ -23,7 +23,7 @@ import { Box, Typography } from '@mui/material';
 import ComplexStatisticsCard from "./examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import DashboardLayout from "./examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "./examples/Navbars/DashboardNavbar";
-import { MaterialUIControllerProvider } from "./context";
+import { MaterialUIControllerProvider } from "../utils/context";
 
 
 

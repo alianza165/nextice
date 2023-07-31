@@ -7,7 +7,7 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Input, Box, 
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import TextField from '@mui/material/TextField';
-import { MaterialUIControllerProvider } from "./context";
+import { MaterialUIControllerProvider } from "../utils/context";
 import MDBox from "./components/MDBox";
 import MDTypography from "./components/MDTypography";
 import MDBadge from "./components/MDBadge";

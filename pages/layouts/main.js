@@ -1,11 +1,11 @@
 import DashboardLayout from "../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../examples/Navbars/DashboardNavbar";
-import { MaterialUIControllerProvider } from "../context";
+import { MaterialUIControllerProvider } from "../../utils/context";
 import Dashboard from "../Dashboard";
 import Items from "../Items";
 import Icecream from "../Icecream";
 import Sidenav from '../components/Sidenav';
-import routes from "../components/routes";
+import routes from "../../utils/routes";
 import React, { useState } from 'react';
 
 

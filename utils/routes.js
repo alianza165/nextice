@@ -1,7 +1,7 @@
 // Material Dashboard 2 React layouts
-import Dashboard from "../Dashboard";
-import Icecream from "../Icecream";
-import Items from "../Items";
+import Dashboard from "../pages/Dashboard";
+import Icecream from "../pages/Icecream";
+import Items from "../pages/Items";
 
 // @mui icons
 import Icon from "@mui/material/Icon";

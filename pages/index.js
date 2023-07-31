@@ -1,5 +1,5 @@
 import React from 'react';
-import { MaterialUIControllerProvider } from "./context";
+import { MaterialUIControllerProvider } from "../utils/context";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import App from './App';
 

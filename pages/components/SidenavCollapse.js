@@ -31,10 +31,10 @@ import {
   collapseIconBox,
   collapseIcon,
   collapseText,
-} from "./styles/sidenavCollapse";
+} from "../../utils/sidenavCollapse";
 
 // Material Dashboard 2 React context
-import { useMaterialUIController } from "../context";
+import { useMaterialUIController } from "../../utils/context";
 
 function SidenavCollapse({ icon, name, active, ...rest }) {
 

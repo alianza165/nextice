@@ -46,7 +46,7 @@ import {
   navbarRow,
   navbarIconButton,
   navbarMobileMenu,
-} from "./styles";
+} from "../../../../utils/styles";
 
 // Material Dashboard 2 React context
 import {
@@ -54,7 +54,7 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
   setOpenConfigurator,
-} from "../../../context";
+} from "../../../../utils/context";
 
 
 function DashboardNavbar({ absolute, light, isMini, bread }) {

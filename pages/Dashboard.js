@@ -75,7 +75,7 @@ function Dashboard() {
 };
 
   const fetchIcecreams = () => {
-    API.get("/icecream/")
+    API.get("/frozengood/")
       .then((res) => {
       const fetchedIcecreams = res.data;
       fetchIcecreamsTotal(fetchedIcecreams); // Pass the fetched items to the fetchItems function
@@ -142,11 +142,11 @@ const fetchIcecreamsRunningLow = (icecreams) => {
 
       // Iterate over the ice creams and aggregate the quantities by ice cream name
       icecreams.forEach((icecream) => {
-        const { icecream_name, quantity } = icecream;
-        if (!aggregatedQuantities.hasOwnProperty(icecream_name)) {
-          aggregatedQuantities[icecream_name] = 0;
+        const { frozengood, quantity } = icecream;
+        if (!aggregatedQuantities.hasOwnProperty(frozengood)) {
+          aggregatedQuantities[frozengood] = 0;
         }
-        aggregatedQuantities[icecream_name] += quantity;
+        aggregatedQuantities[frozengood] += quantity;
       });
 
       // Calculate the running low ice creams by checking the aggregated quantities

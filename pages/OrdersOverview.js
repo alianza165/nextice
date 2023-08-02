@@ -19,7 +19,7 @@ function OrdersOverview() {
   }, []);
 
   const fetchAllIcecreams = () => {
-    API.get("/icecream/")
+    API.get("/frozengood/")
       .then((res) => {
         setAllIcecreams(res.data);
       })
@@ -36,10 +36,10 @@ function OrdersOverview() {
     const quantitiesByIceCreamName = {};
     if (allIcecreams && allIcecreams.length > 0) {
       allIcecreams.forEach((item) => {
-        if (item.icecream_name in quantitiesByIceCreamName) {
-          quantitiesByIceCreamName[item.icecream_name] += item.quantity;
+        if (item.frozengood in quantitiesByIceCreamName) {
+          quantitiesByIceCreamName[item.frozengood] += item.quantity;
         } else {
-          quantitiesByIceCreamName[item.icecream_name] = item.quantity;
+          quantitiesByIceCreamName[item.frozengood] = item.quantity;
         }
       });
     }

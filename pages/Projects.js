@@ -3,6 +3,15 @@ import { Card, Box, TableContainer, Table, TableHead, TableRow, TableCell, Table
 import Pagination from "@mui/material/Pagination";
 import API from '../utils/API';
 import TableSortLabel from "@mui/material/TableSortLabel";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+
 
 function Projects() {
   const [selectedOption, setSelectedOption] = useState("");
@@ -11,6 +20,9 @@ function Projects() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [quantity, setQuantity] = useState(0);
+  const [adjustmentType, setAdjustmentType] = useState("in"); // or "out"
   const itemsPerPage = 9;
   const searchInputRef = useRef();
 
@@ -28,9 +40,50 @@ function Projects() {
       });
   };
 
+  const handleEditQuantity = (item, action) => {
+    setSelectedItem(item);
+    setQuantity(0); // Reset the quantity value when opening the dialog
+    setAdjustmentType(action);
+    setOpen(true);
+  };
+
+const updateItemQuantity = (itemId, newQuantity) => {
+    setAllItemsData((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+
   const handleOptionChange = (option) => {
     setSelectedOption(option);
   };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    const adjustmentValue = adjustmentType === "in" ? quantity : -quantity;
+    const updatedItem = { ...selectedItem, quantity: selectedItem.quantity + adjustmentValue };
+
+    API.put(`/item/${selectedItem.id}/`, updatedItem)
+      .then(() => {
+        console.log('Item updated successfully');
+        updateItemQuantity(selectedItem.id, updatedItem.quantity); // Update the item's quantity in the state
+      })
+      .catch((error) => {
+        console.error('Error updating item:', error);
+      })
+      .finally(() => {
+        setOpen(false);
+      });
+  };
+
+const handleClose = () => {
+  setOpen(false);
+};
+
+const [open, setOpen] = useState(false);
+
 
   const GatsbyListItemsStyle = () => {
     const items = allItemsData;
@@ -56,54 +109,76 @@ function Projects() {
 
     const paginatedItems = sortedItems.slice(startIndex, endIndex);
 
+
+
     return (
-      <Box minWidth={240}>
-        <Typography variant="h6" gutterBottom>
-          Items
-        </Typography>
-        <TextField
-          label="Search"
+      <div className="px-4 py-8">
+      <h1 className="text-2xl font-bold mb-4">Items</h1>
+      <div className="mb-4">
+        <input
+          type="text"
+          className="border rounded px-2 py-1 w-60"
+          placeholder="Search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          variant="outlined"
-          margin="dense"
-          inputRef={searchInputRef} // Set ref for the search input element
+          ref={searchInputRef}
         />
-        <TableContainer>
-  <Table>
-    <TableHead>
-      <TableRow>
-        <TableCell style={{ fontWeight: "bold", textAlign: "left" }}>
-          <TableSortLabel
-            active
-            direction={sortOrder}
-            onClick={handleSort}
+      </div>
+      <table className="w-full">
+        <thead>
+          <tr>
+            <th className="font-bold text-left">
+              <button onClick={handleSort}>
+                Item Name
+                {sortOrder === 'asc' ? (
+                  <span>&#9650;</span>
+                ) : (
+                  <span>&#9660;</span>
+                )}
+              </button>
+            </th>
+            <th className="font-light text-center">Quantity</th>
+            <th className="font-light text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paginatedItems.map((item) => (
+            <tr key={item.id}>
+              <td class="text-sm">{item.item}</td>
+              <td className="text-center">{item.quantity}</td>
+              <td className="text-center">
+                <IconButton onClick={() => handleEditQuantity(item, "in")} color="primary">
+                  <AddIcon />
+                </IconButton>
+                <IconButton onClick={() => handleEditQuantity(item, "out")} color="secondary">
+                  <RemoveIcon />
+                </IconButton>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="my-4">
+        <div>Page {currentPage} of {totalPages}</div>
+        <div>
+          <button
+            className="px-2 py-1 rounded mr-2 bg-blue-500 text-white"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
           >
-            Item Name
-          </TableSortLabel>
-        </TableCell>
-        <TableCell style={{ fontWeight: "light", textAlign: "center" }}>Quantity</TableCell>
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {paginatedItems.map((item) => (
-        <TableRow key={item.id}>
-          <TableCell style={{ textAlign: "left" }}>{item.item}</TableCell>
-          <TableCell style={{ textAlign: "center" }}>{item.quantity}</TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-</TableContainer>
-        <Box>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={(event, page) => setCurrentPage(page)}
-          />
-        </Box>
-      </Box>
-    );
+            Previous
+          </button>
+          <button
+            className="px-2 py-1 rounded bg-blue-500 text-white"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  );
   };
 
   useEffect(() => {
@@ -118,6 +193,25 @@ function Projects() {
       <Box pt={3} px={3}>
         <GatsbyListItemsStyle />
       </Box>
+      <Dialog open={open} onClose={handleClose}>
+  <DialogTitle>Edit Quantity</DialogTitle>
+  <DialogContent>
+    <form onSubmit={handleFormSubmit}>
+      <TextField
+        label="Quantity"
+        value={quantity}
+        onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+        type="number"
+        inputProps={{ min: 0 }}
+        fullWidth
+      />
+    </form>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleClose}>Cancel</Button>
+    <Button onClick={handleFormSubmit} color="primary">Submit</Button>
+  </DialogActions>
+</Dialog>
     </Card>
   );
 }

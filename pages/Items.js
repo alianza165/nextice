@@ -42,8 +42,10 @@ function Items() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [quantity, setQuantity] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [itemLocation, setItemLocation] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [unit, setUnit] = useState('');
+
 
   const handleOpen = (item) => {
     setSelectedItem(item);
@@ -219,18 +221,35 @@ function Items() {
     return [...new Set(categories)];
   };
 
+  const getUniqueItemLocations = () => {
+    const item_locations = items.map((item) => item.item_location.item_location);
+    return [...new Set(item_locations)];
+  };
+
   const filteredItems =
-    selectedCategory === 'All' || !selectedCategory
-      ? items.filter((item) => item.item.toLowerCase().includes(searchQuery.toLowerCase()))
-      : items.filter(
-          (item) =>
-            item.category === selectedCategory && item.item.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+  (selectedCategory === 'All' || !selectedCategory) &&
+  (itemLocation === 'All' || !itemLocation)
+    ? items.filter((item) =>
+        item.item.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : items.filter(
+        (item) =>
+          (selectedCategory === 'All' || !selectedCategory || item.category === selectedCategory) &&
+          (itemLocation === 'All' || !itemLocation ||
+            item.item_location.item_location === itemLocation) &&
+          item.item.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
   const uniqueCategories = getUniqueCategories();
 
+  const uniqueItemLocations = getUniqueItemLocations();
+
   const handleTabChange = (event, newValue) => {
     setSelectedCategory(newValue);
+  };
+
+  const handleLocationChange = (event, newValue) => {
+    setItemLocation(newValue);
   };
 
   const handleInputChange = (event) => {
@@ -250,6 +269,16 @@ function Items() {
               </MDBox>
               <Grid container>
                 <Grid item xs={12} md={3}>
+                  <MDBox pt={2} px={3}>
+                    <Autocomplete
+                      disablePortal
+                      id="item-location-combo-box"
+                      options={uniqueItemLocations}
+                      onChange={handleLocationChange} // Handle location change
+                      sx={{ width: 200 }}
+                      renderInput={(params) => <TextField {...params} label="Item Location" />}
+                    />
+                  </MDBox>
                   <MDBox pt={2} px={3}>
                     <Autocomplete
                       disablePortal

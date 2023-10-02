@@ -46,10 +46,10 @@ items
 
       const filteredItems = 
       selectedType === 'All' || !selectedType
-      ? sortedItems.filter((item) => item.frozengood.toLowerCase().includes(searchQuery.toLowerCase()))
+      ? sortedItems.filter((item) => item.frozengood.frozengood.toLowerCase().includes(searchQuery.toLowerCase()))
       : sortedItems.filter(
         (item) =>
-          item.frozengood_type === selectedType && item.frozengood.toLowerCase().includes(searchQuery.toLowerCase())
+          item.frozengood.frozengood_type.frozengood_type === selectedType && item.frozengood.frozengood.toLowerCase().includes(searchQuery.toLowerCase())
         );
 
 
@@ -119,20 +119,20 @@ items
 
         const iceCreamMap = new Map();
         filteredItems.forEach(item => {
-          if (iceCreamMap.has(item.frozengood)) {
-            iceCreamMap.get(item.frozengood)[`freezer_${item.freezer_number}`] = item.quantity;
-            iceCreamMap.get(item.frozengood)[`id_${item.freezer_number}`] = item.id;
+          if (iceCreamMap.has(item.frozengood.frozengood)) {
+            iceCreamMap.get(item.frozengood.frozengood)[`freezer_${item.freezer_number}`] = item.quantity;
+            iceCreamMap.get(item.frozengood.frozengood)[`id_${item.freezer_number}`] = item.id;
           } else {
-            const row = { id: item.frozengood, frozengood: item.frozengood };
+            const row = { id: item.frozengood.frozengood, frozengood: item.frozengood.frozengood };
             row[`freezer_${item.freezer_number}`] = item.quantity;
             row[`id_${item.freezer_number}`] = item.id;
             row.totalQuantity = item.quantity;
-            iceCreamMap.set(item.frozengood, row);
+            iceCreamMap.set(item.frozengood.frozengood, row);
           }
         });
         const dynamicRows = Array.from(iceCreamMap.values());
       setRows(dynamicRows);
-      const uniqueTypes = Array.from(new Set(sortedItems.map(item => item.frozengood_type)));
+      const uniqueTypes = Array.from(new Set(sortedItems.map(item => item.frozengood.frozengood_type.frozengood_type)));
         setFrozenGoodTypes(uniqueTypes);
       })
       .catch(console.error)
@@ -180,20 +180,20 @@ items
   setSearchQuery(searchQuery);
 
   const filteredItems = items.filter(item =>
-    item.frozengood.toLowerCase().includes(searchQuery.toLowerCase())
+    item.frozengood.frozengood.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const iceCreamMap = new Map();
   filteredItems.forEach(item => {
-    if (iceCreamMap.has(item.frozengood)) {
-      iceCreamMap.get(item.frozengood)[`freezer_${item.freezer_number}`] = item.quantity;
-      iceCreamMap.get(item.frozengood)[`id_${item.freezer_number}`] = item.id;
+    if (iceCreamMap.has(item.frozengood.frozengood)) {
+      iceCreamMap.get(item.frozengood.frozengood)[`freezer_${item.freezer_number}`] = item.quantity;
+      iceCreamMap.get(item.frozengood.frozengood)[`id_${item.freezer_number}`] = item.id;
     } else {
-      const row = { id: item.frozengood, frozengood: item.frozengood };
+      const row = { id: item.frozengood.frozengood, frozengood: item.frozengood.frozengood };
       row[`freezer_${item.freezer_number}`] = item.quantity;
       row[`id_${item.freezer_number}`] = item.id;
       row.totalQuantity = item.quantity;
-      iceCreamMap.set(item.frozengood, row);
+      iceCreamMap.set(item.frozengood.frozengood, row);
     }
   });
   const dynamicRows = Array.from(iceCreamMap.values());

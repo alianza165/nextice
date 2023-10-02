@@ -101,7 +101,7 @@ items
             field: `freezer_${freezerNumber}`,
             headerName: (
       <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
-        FREEZER {freezerNumber}
+        F {freezerNumber}
       </MDTypography>
     ),
             width: 120,

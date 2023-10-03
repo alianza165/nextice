@@ -55,8 +55,8 @@ function Items() {
 
   const handleOpenUnit = (item) => {
   setSelectedItem(item);
-    const unitId = Object.keys(unitsDictionary).find((key) => unitsDictionary[key] === item.measuring_unit);
-    setUnit(unitId);
+    const unitId = Object.keys(unitsDictionary).find((key) => Number(key) === item.measuring_unit.id);
+    setUnit(item.measuring_unit.measuring_unit);
   setOpenUnit(true);
 };
 
@@ -73,12 +73,15 @@ function Items() {
   };
 
   const handleUnitChange = (event, value) => {
-    const unitId = Object.keys(unitsDictionary).find((key) => unitsDictionary[key] === value.measuring_unit);
+    console.log(value)
+    const unitId =  value.id;
     setUnit(unitId);
 };
 
   const handleFormSubmitUnit = (event) => {
     event.preventDefault();
+    console.log(selectedItem)
+    console.log(unit)
     const updatedItem = { ...selectedItem, measuring_unit: unit };
 
     API.put(`/item/${selectedItem.id}/`, updatedItem)
@@ -193,7 +196,7 @@ function Items() {
       width: 180,
       renderCell: (params) => (
         <Button onClick={() => handleOpenUnit(params.row)} color="primary">
-          {unitsDictionary[params.row.measuring_unit]}
+          {params.row.measuring_unit.measuring_unit}
         </Button>
       ),
     },

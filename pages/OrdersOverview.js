@@ -36,10 +36,10 @@ function OrdersOverview() {
     const quantitiesByIceCreamName = {};
     if (allIcecreams && allIcecreams.length > 0) {
       allIcecreams.forEach((item) => {
-        if (item.frozengood in quantitiesByIceCreamName) {
-          quantitiesByIceCreamName[item.frozengood] += item.quantity;
+        if (item.frozengood.frozengood in quantitiesByIceCreamName) {
+          quantitiesByIceCreamName[item.frozengood.frozengood] += item.quantity;
         } else {
-          quantitiesByIceCreamName[item.frozengood] = item.quantity;
+          quantitiesByIceCreamName[item.frozengood.frozengood] = item.quantity;
         }
       });
     }

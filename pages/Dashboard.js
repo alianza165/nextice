@@ -311,7 +311,7 @@ function Dashboard() {
                           ) : (
                             <>
                               <TableCell>{item.item}</TableCell>
-                              <TableCell>{item.quantity}</TableCell>
+                              <TableCell>{item.quantity} {item.measuring_unit.measuring_unit}</TableCell>
                             </>
                           )}
                         </TableRow>

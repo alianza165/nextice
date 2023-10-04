@@ -307,9 +307,11 @@ const handleTabChange = (event, newValue) => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 1000,
-            height: 600, // Fixed height
-            overflowY: "scroll", // Make it scrollable
+            width: "80%", // Set the width to 100% initially
+            maxWidth: "1000px", // Set a maximum width for the modal
+            height: "80%", // Fixed height
+            overflowX: "scroll", // Make it horizontally scrollable
+            overflowY: "scroll",
             bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,

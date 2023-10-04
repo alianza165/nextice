@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import API from '../utils/API';
 import { useTable } from 'react-table';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Input, Box, Typography } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Input, Box, Typography, Modal } from '@mui/material';
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import TextField from '@mui/material/TextField';
@@ -13,6 +13,8 @@ import MDBadge from "./components/MDBadge";
 import Autocomplete from '@mui/material/Autocomplete';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import Transactions from "./Transactions";
+
 
 const VISIBLE_FIELDS = [];
 
@@ -28,6 +30,7 @@ function Icecream() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [frozenGoodTypes, setFrozenGoodTypes] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   setFrozenGoodTypes
 
 items
@@ -204,9 +207,19 @@ const handleTabChange = (event, newValue) => {
     setSelectedType(newValue);
   };
 
+  const handleModalOpen = () => {
+    <Transactions />
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-      <MDBox pt={6} pb={3}>
-      <Grid container spacing={6}>
+      <MDBox pt={6}>
+      <Button onClick={() => handleModalOpen()}>View Transactions</Button>
+      <Grid container spacing={6} pt={6}>
         <Grid item xs={12}>
           <Card>
             <MDBox
@@ -282,6 +295,29 @@ const handleTabChange = (event, newValue) => {
           </Card>
         </Grid>
       </Grid>
+      <Modal
+        open={isModalOpen}
+        onClose={handleModalClose}
+        aria-labelledby="running-low-items-title"
+        aria-describedby="running-low-items-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 1000,
+            height: 600, // Fixed height
+            overflowY: "scroll", // Make it scrollable
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Transactions object='frozengood' />
+        </Box>
+      </Modal>
     </MDBox>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from '../utils/API';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Input, Box, Typography, Badge } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Input, Box, Typography, Badge, Modal } from '@mui/material';
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Autocomplete from '@mui/material/Autocomplete';
@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import MDBox from "./components/MDBox";
 import MDTypography from "./components/MDTypography";
 import MDBadge from "./components/MDBadge";
+import Transactions from "./Transactions";
 
 function Items() {
   useEffect(() => {
@@ -45,6 +46,7 @@ function Items() {
   const [itemLocation, setItemLocation] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [unit, setUnit] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
   const handleOpen = (item) => {
@@ -221,7 +223,10 @@ function Items() {
 
   const getUniqueCategories = () => {
     const categories = items.map((item) => item.category);
-    return [...new Set(categories)];
+    const uniqueCategories = [...new Set(categories)];
+
+    // Sort the unique categories alphabetically
+    return uniqueCategories.sort();
   };
 
   const getUniqueItemLocations = () => {
@@ -259,8 +264,18 @@ function Items() {
     setSearchQuery(event.target.value);
   };
 
+  const handleModalOpen = () => {
+    <Transactions />
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
+    <Button onClick={() => handleModalOpen()}>View Transactions</Button>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -368,6 +383,29 @@ function Items() {
           </form>
         </DialogContent>
       </Dialog>
+      <Modal
+        open={isModalOpen}
+        onClose={handleModalClose}
+        aria-labelledby="running-low-items-title"
+        aria-describedby="running-low-items-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 1000,
+            height: 600, // Fixed height
+            overflowY: "scroll", // Make it scrollable
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Transactions object='items' />
+        </Box>
+      </Modal>
       </div>
   );
 }

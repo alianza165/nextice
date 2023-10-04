@@ -32,6 +32,8 @@ import ComplexStatisticsCard from "./examples/Cards/StatisticsCards/ComplexStati
 import DashboardLayout from "./examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "./examples/Navbars/DashboardNavbar";
 import { MaterialUIControllerProvider } from "../utils/context";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+
 
 
 
@@ -131,7 +133,6 @@ function Dashboard() {
     (item) => item.company === "AMAZON" && item.running_low === true
   );
   setRunningLowAmazonItems(runningLowAmazonItems);
-  console.log(runningLowAmazonItems)
   setAmazonRunningLowCount(runningLowAmazonItems.length);
 
   const runningLowCups = items.filter(
@@ -174,12 +175,9 @@ function Dashboard() {
 
     // Filter and return only items with quantity less than 1
     const filteredIceCreams = sortedIceCreams.filter((iceCream) => iceCream[1] < 1);
-    console.log(filteredIceCreams)
 
     setRunningLowIcecreams(filteredIceCreams);
-    console.log(runningLowIcecreams)
     setIcecreamsRunningLowCount(filteredIceCreams.length);
-    console.log(icecreamsRunningLowCount)
   };
 
 
@@ -207,6 +205,7 @@ function Dashboard() {
 
   const handleModalOpen = (runningLowItems) => {
     setModalItems(runningLowItems);
+    console.log(modalItems)
     setIsModalOpen(true);
   };
 
@@ -292,20 +291,35 @@ function Dashboard() {
               <Typography id="running-low-items-title" variant="h6" component="h2">
                 Running Low Items
               </Typography>
-              <List>
-                {Array.isArray(modalItems) ? (
-                  modalItems.map((item) => (
-                    <ListItem key={item.id}>
-                      {Array.isArray(item) ? (
-                        <ListItemText primary={item[0]} />
-                      ) : (
-                        <ListItemText primary={item.item} />
-                      )}
-                    </ListItem>
-                  ))
-                ) : null}
-
-              </List>
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Item</TableCell>
+                      <TableCell>Quantity</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Array.isArray(modalItems) ? (
+                      modalItems.map((item) => (
+                        <TableRow key={item.id}>
+                          {Array.isArray(item) ? (
+                            <>
+                              <TableCell>{item[0]}</TableCell>
+                              <TableCell>{item[1]}</TableCell>
+                            </>
+                          ) : (
+                            <>
+                              <TableCell>{item.item}</TableCell>
+                              <TableCell>{item.quantity}</TableCell>
+                            </>
+                          )}
+                        </TableRow>
+                      ))
+                    ) : null}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Box>
           </Modal>
           <Box>

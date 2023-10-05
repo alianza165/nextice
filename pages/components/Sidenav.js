@@ -225,7 +225,7 @@ function Sidenav({ signOut, color, brand, brandName, routes, activePage, ...rest
         <Linker href="/Icecream" >
           <Button variation="link">
             <IcecreamIcon fontSize="medium"/>
-            <p class="px-2">Icecream</p>
+            <p class="px-2">Frozen Goods</p>
           </Button>
         </Linker>
         </li>

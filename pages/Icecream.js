@@ -86,7 +86,7 @@ items
             cellClassName: 'table-cell', 
             headerName: (
       <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
-        ICECREAM
+        FROZEN GOODS
       </MDTypography>
     ), 
             width: 310,

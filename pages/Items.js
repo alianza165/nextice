@@ -139,6 +139,23 @@ function Items() {
       ),
     },
     {
+      field: 'item_location',
+      cellClassName: 'table-cell',
+      headerName: (
+        <MDTypography variant="caption" fontWeight="bold" ml={1} lineHeight={1}>
+          LOCATION
+        </MDTypography>
+      ),
+      width: 120,
+      renderCell: (params) => (
+        <MDBox display="flex" alignItems="center" lineHeight={1}>
+          <MDTypography variant="body2" fontWeight="medium" ml={1} lineHeight={1}>
+            {params.row.item_location.item_location}
+          </MDTypography>
+        </MDBox>
+      ),
+    },
+    {
       field: 'item',
       cellClassName: 'table-cell',
       headerName: (

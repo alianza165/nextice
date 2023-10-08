@@ -24,7 +24,7 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import MDBox from "../../../../components/MDBox";
 import MDInput from "../../../../components/MDInput";
 import MDTypography from "../../../../components/MDTypography";
-import { SkeletonLoader2 } from "../../../../components/SkeletonLoaders";
+import SkeletonLoader2 from "../../../../components/SkeletonLoaders2";
 
 
 

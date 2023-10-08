@@ -10,7 +10,7 @@ import MDBox from "./components/MDBox";
 import MDTypography from "./components/MDTypography";
 import MDBadge from "./components/MDBadge";
 import Transactions from "./Transactions";
-import { SkeletonLoader3 } from "./components/SkeletonLoaders";
+import SkeletonLoader3 from "./components/SkeletonLoaders3";
 
 function Items() {
 

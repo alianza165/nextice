@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { SkeletonLoader1 } from "./components/SkeletonLoaders";
+import SkeletonLoader1 from "./components/SkeletonLoaders1";
 
 
 function Projects() {

@@ -14,7 +14,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Transactions from "./Transactions";
-import { SkeletonLoader3 } from "./components/SkeletonLoaders";
+import SkeletonLoader3 from "./components/SkeletonLoaders3";
 
 
 const VISIBLE_FIELDS = [];

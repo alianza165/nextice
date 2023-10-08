@@ -3,7 +3,7 @@ import { Card, Box, TableContainer, Table, TableHead, TableRow, TableCell, Table
 import Pagination from "@mui/material/Pagination";
 import API from '../utils/API';
 import TableSortLabel from "@mui/material/TableSortLabel";
-import { SkeletonLoader1 } from "./components/SkeletonLoaders";
+import SkeletonLoader1 from "./components/SkeletonLoaders1";
 
 
 function OrdersOverview() {

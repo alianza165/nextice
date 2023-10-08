@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { useTable } from "react-table";
 import API from '../utils/API';
-import { SkeletonLoader3 } from "./components/SkeletonLoaders";
+import SkeletonLoader3 from "./components/SkeletonLoaders3";
 
 function Transactions({ object }) {
   const [transactions, setTransactions] = useState([]);

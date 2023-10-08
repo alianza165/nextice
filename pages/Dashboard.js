@@ -35,9 +35,6 @@ import { MaterialUIControllerProvider } from "../utils/context";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 
-
-
-
 // Data
 
 // Dashboard components
@@ -78,7 +75,8 @@ function Dashboard() {
   const [runningLowCoins, setRunningLowCoins] = useState([]);
   const [runningLowFruits, setRunningLowFruits] = useState([]);
   const [runningLowIcecreams, setRunningLowIcecreams] = useState([]);
-  
+  const [dataLoaded, setDataLoaded] = useState(false);
+
 
 
   useEffect(() => {
@@ -95,6 +93,9 @@ function Dashboard() {
     })
     .catch((error) => {
       console.error("Error fetching items:", error);
+    })
+    .finally(() => {
+      setDataLoaded(true);
     });
 };
 
@@ -106,6 +107,9 @@ function Dashboard() {
       })
       .catch((error) => {
         console.error("Error fetching icecreams:", error);
+      })
+      .finally(() => {
+        setDataLoaded(true);
       });
   };
 
@@ -136,7 +140,7 @@ function Dashboard() {
   setAmazonRunningLowCount(runningLowAmazonItems.length);
 
   const runningLowCups = items.filter(
-    (item) => item.company === "CUPS (ICECREAM)" && item.running_low === true
+    (item) => item.category === "Cups & Lids (Ice Cream)" && item.running_low === true
   );
   setRunningLowCups(runningLowCups);
   setCupsRunningLowCount(runningLowCups.length);
@@ -181,7 +185,7 @@ function Dashboard() {
   };
 
 
-  const renderStatisticsCard = (title, count, company, runningLowItems) => {
+  const renderStatisticsCard = (title, count, company, runningLowItems, dataLoaded) => {
     return (
       <Grid item xs={12} md={6} lg={3} key={title}>
         <Box mb={1.5}>
@@ -190,6 +194,7 @@ function Dashboard() {
             icon="AcUnitTwoToneIcon"
             title={title}
             count={count}
+            dataLoaded={dataLoaded}
             percentage={{
               color: "success",
               amount: "+55%",
@@ -223,49 +228,57 @@ function Dashboard() {
               "ICECREAM RUNNING LOW",
               icecreamsRunningLowCount,
               "ICECREAM",
-              runningLowIcecreams
+              runningLowIcecreams,
+              dataLoaded
             )}
             {renderStatisticsCard(
               "FRUITS RUNNING LOW",
               fruitsRunningLowCount,
               "FRUITS",
-              runningLowFruits
+              runningLowFruits,
+              dataLoaded
             )}
             {renderStatisticsCard(
               "CUPS (ICECREAM) RUNNING LOW",
               cupsRunningLowCount,
               "CUPS (ICECREAM)",
-              runningLowCups
+              runningLowCups,
+              dataLoaded
             )}
             {renderStatisticsCard(
               "REGISTER COINS RUNNING LOW",
               coinsRunningLowCount,
               "REGISTER COINS",
-              runningLowCoins
+              runningLowCoins,
+              dataLoaded
             )}
             {renderStatisticsCard(
               "WEBSTRAURANT RUNNING LOW",
               webstaurantRunningLowCount,
               "WEBSTRAURANT",
-              runningLowWebstaurantItems
+              runningLowWebstaurantItems,
+              dataLoaded
             )}
             {renderStatisticsCard(
               "PRIMIZIE RUNNING LOW",
               primizieRunningLowCount,
               "PRIMIZIE",
-              runningLowPrimizieItems
+              runningLowPrimizieItems,
+              dataLoaded
             )}
             {renderStatisticsCard(
               "BJ'S RUNNING LOW",
               bjsRunningLowCount,
               "BJ'S",
-              runningLowBjsItems
+              runningLowBjsItems,
+              dataLoaded
             )}
             {renderStatisticsCard(
               "AMAZON RUNNING LOW",
               amazonRunningLowCount,
               "AMAZON",
-              runningLowAmazonItems
+              runningLowAmazonItems,
+              dataLoaded
             )}
           </Grid>
           <Modal

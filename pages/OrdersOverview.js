@@ -3,6 +3,8 @@ import { Card, Box, TableContainer, Table, TableHead, TableRow, TableCell, Table
 import Pagination from "@mui/material/Pagination";
 import API from '../utils/API';
 import TableSortLabel from "@mui/material/TableSortLabel";
+import { SkeletonLoader1 } from "./components/SkeletonLoaders";
+
 
 function OrdersOverview() {
   const [selectedOption, setSelectedOption] = useState("");
@@ -12,19 +14,25 @@ function OrdersOverview() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const itemsPerPage = 9;
-  const searchInputRef = useRef();
+  const searchInputRef = useRef(); // Move this ref here
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchAllIcecreams();
   }, []);
 
   const fetchAllIcecreams = () => {
+    setIsLoading(true);
+
     API.get("/frozengood/")
       .then((res) => {
         setAllIcecreams(res.data);
       })
       .catch((error) => {
         console.error("Error fetching total items:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -43,7 +51,6 @@ function OrdersOverview() {
         }
       });
     }
-    // Sort ice creams by total quantity in ascending order
     const sortedIceCreams = Object.entries(quantitiesByIceCreamName).sort(
       (a, b) => a[1] - b[1]
     );
@@ -85,7 +92,7 @@ function OrdersOverview() {
           onChange={(e) => setSearchQuery(e.target.value)}
           variant="outlined"
           margin="dense"
-          inputRef={searchInputRef} // Set ref for the search input element
+          inputRef={searchInputRef} // Keep the ref here
         />
         <TableContainer>
           <Table>
@@ -126,7 +133,9 @@ function OrdersOverview() {
 
   useEffect(() => {
     // Focus the search input element when the page is loaded or the searchQuery changes
-    searchInputRef.current.focus();
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
   }, [searchQuery]);
 
   return (
@@ -134,7 +143,11 @@ function OrdersOverview() {
       <Typography variant="button" fontWeight="regular" color="text"></Typography>
 
       <Box pt={3} px={3}>
-        <GatsbyListIcecreamStyle />
+        {isLoading ? (
+          <SkeletonLoader1 />
+        ) : (
+          <GatsbyListIcecreamStyle />
+        )}
       </Box>
     </Card>
   );

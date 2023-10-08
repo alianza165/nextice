@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { useTable } from "react-table";
 import API from '../utils/API';
+import { SkeletonLoader3 } from "./components/SkeletonLoaders";
 
 function Transactions({ object }) {
   const [transactions, setTransactions] = useState([]);
@@ -20,9 +21,13 @@ function Transactions({ object }) {
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
+  const [isLoading, setIsLoading] = useState(true);
   const columns = React.useMemo(
     () =>
       object === "items"
@@ -78,47 +83,51 @@ function Transactions({ object }) {
 
   return (
     <Box py={3}>
-      <table {...getTableProps()} style={{ width: "100%" }}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  style={{
-                    minWidth: "50px", // Set a minimum width for columns
-                    textAlign: "left", // Align text to the left
-                  }}
-                >
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        minWidth: "150px", // Set a minimum width for cells
-                        textAlign: "left", // Align text to the left
-                      }}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
+      {isLoading ? (
+          <SkeletonLoader3 />
+        ) : (
+        <table {...getTableProps()} style={{ width: "100%" }}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    style={{
+                      minWidth: "50px", // Set a minimum width for columns
+                      textAlign: "left", // Align text to the left
+                    }}
+                  >
+                    {column.render("Header")}
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          minWidth: "150px", // Set a minimum width for cells
+                          textAlign: "left", // Align text to the left
+                        }}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </Box>
   );
 }

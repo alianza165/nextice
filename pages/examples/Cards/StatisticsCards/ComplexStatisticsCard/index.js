@@ -24,13 +24,14 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import MDBox from "../../../../components/MDBox";
 import MDInput from "../../../../components/MDInput";
 import MDTypography from "../../../../components/MDTypography";
+import { SkeletonLoader2 } from "../../../../components/SkeletonLoaders";
 
 
 
 // Material Dashboard 2 React components
 import { Box, Typography } from '@mui/material';
 
-function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
+function ComplexStatisticsCard({ color, title, count, percentage, icon, dataLoaded }) {
   return (
     <Card>
       <MDBox display="flex" justifyContent="space-between" pt={1} px={2}>
@@ -53,7 +54,11 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
           <MDTypography variant="button" fontWeight="light" color="text">
             {title}
           </MDTypography>
-          <MDTypography variant="h4">{count}</MDTypography>
+          {dataLoaded ? (
+            <MDTypography variant="h4">{count}</MDTypography>
+          ) : (
+            <SkeletonLoader2 /> // Display SkeletonLoader2 when data is not loaded
+          )}
         </MDBox>
       </MDBox>
       <Divider />

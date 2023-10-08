@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { SkeletonLoader1 } from "./components/SkeletonLoaders";
 
 
 function Projects() {
@@ -23,8 +24,9 @@ function Projects() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [quantity, setQuantity] = useState(0);
   const [adjustmentType, setAdjustmentType] = useState("in"); // or "out"
-  const itemsPerPage = 9;
   const searchInputRef = useRef();
+  const [isLoading, setIsLoading] = useState(true);
+  const itemsPerPage = 9;
 
   useEffect(() => {
     fetchAllItems();
@@ -37,6 +39,9 @@ function Projects() {
       })
       .catch((error) => {
         console.error("Error fetching items:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -183,7 +188,9 @@ const [open, setOpen] = useState(false);
 
   useEffect(() => {
     // Focus the search input element when the page is loaded or the searchQuery changes
-    searchInputRef.current.focus();
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
   }, [searchQuery]);
 
   return (
@@ -191,7 +198,11 @@ const [open, setOpen] = useState(false);
       <Typography variant="button" fontWeight="regular" color="text"></Typography>
 
       <Box pt={3} px={3}>
-        <GatsbyListItemsStyle />
+      {isLoading ? (
+          <SkeletonLoader1 />
+        ) : (
+          <GatsbyListItemsStyle />
+        )}
       </Box>
       <Dialog open={open} onClose={handleClose}>
   <DialogTitle>Edit Quantity</DialogTitle>

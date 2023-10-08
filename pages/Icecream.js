@@ -14,12 +14,14 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Transactions from "./Transactions";
+import { SkeletonLoader3 } from "./components/SkeletonLoaders";
 
 
 const VISIBLE_FIELDS = [];
 
 
 function Icecream() {
+
   const [items, setItems] = useState([]);
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
@@ -31,9 +33,8 @@ function Icecream() {
   const [selectedType, setSelectedType] = useState('All');
   const [frozenGoodTypes, setFrozenGoodTypes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  setFrozenGoodTypes
 
-items
+
   // Create columns dynamically based on freezer numbers
    useEffect(() => {
     refreshItems();
@@ -41,7 +42,6 @@ items
 
 
   const refreshItems = () => {
-  setIsLoading(true);
   API.get("/frozengood/")
     .then((res) => {
       const sortedItems = res.data.sort((a, b) => a.id - b.id);
@@ -205,6 +205,7 @@ items
 
 const handleTabChange = (event, newValue) => {
     setSelectedType(newValue);
+    setIsLoading(true);
   };
 
   const handleModalOpen = () => {
@@ -258,7 +259,11 @@ const handleTabChange = (event, newValue) => {
               />
             </MDBox>
             <MDBox pt={3} px={3} height={600}>
-              <DataGrid density="compact" columns={columns} rows={rows} disableSelectionOnClick components={{ Toolbar: GridToolbar }} />
+              {isLoading ? (
+                <SkeletonLoader3 />
+                ) : (
+                  <DataGrid density="compact" columns={columns} rows={rows} disableSelectionOnClick components={{ Toolbar: GridToolbar }} />
+              )}
               <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
                   <form onSubmit={handleFormSubmit}>

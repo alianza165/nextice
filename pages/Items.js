@@ -10,30 +10,9 @@ import MDBox from "./components/MDBox";
 import MDTypography from "./components/MDTypography";
 import MDBadge from "./components/MDBadge";
 import Transactions from "./Transactions";
+import { SkeletonLoader3 } from "./components/SkeletonLoaders";
 
 function Items() {
-  useEffect(() => {
-    refreshItems();
-  }, []);
-
-  const refreshItems = () => {
-    API.get("/item/")
-      .then((res) => {
-        const sortedItems = res.data.sort((a, b) => a.id - b.id);
-        setItems(sortedItems);
-      })
-      .catch(console.error);
-    API.get("/measuring_unit/")
-      .then((res) => {
-        setUnits(res.data);
-        const unitsDict = {};
-        res.data.forEach(unit => {
-          unitsDict[unit.id] = unit.measuring_unit;
-        });
-        setUnitsDictionary(unitsDict);
-      })
-      .catch(console.error);
-  };
 
   const [units, setUnits] = useState([]);
   const [unitsDictionary, setUnitsDictionary] = useState({});
@@ -47,6 +26,33 @@ function Items() {
   const [searchQuery, setSearchQuery] = useState('');
   const [unit, setUnit] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    refreshItems();
+  }, []);
+
+  const refreshItems = () => {
+    API.get("/item/")
+      .then((res) => {
+        const sortedItems = res.data.sort((a, b) => a.id - b.id);
+        setItems(sortedItems);
+      })
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
+    API.get("/measuring_unit/")
+      .then((res) => {
+        setUnits(res.data);
+        const unitsDict = {};
+        res.data.forEach(unit => {
+          unitsDict[unit.id] = unit.measuring_unit;
+        });
+        setUnitsDictionary(unitsDict);
+      })
+      .catch(console.error);
+  };
 
 
   const handleOpen = (item) => {
@@ -332,7 +338,11 @@ function Items() {
                 </Grid>
               </Grid>
               <MDBox pt={2} px={3}>
-                <DataGrid density="compact" rows={filteredItems} columns={columns} components={{ Toolbar: GridToolbar }} />
+              {isLoading ? (
+                <SkeletonLoader3 />
+                ) : (
+                  <DataGrid density="compact" rows={filteredItems} columns={columns} components={{ Toolbar: GridToolbar }} />
+              )}
               </MDBox>
             </Card>
           </Grid>

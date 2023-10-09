@@ -25,6 +25,7 @@ function Items() {
   const [itemLocation, setItemLocation] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [unit, setUnit] = useState('');
+  const [unitName, setUnitName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -62,11 +63,10 @@ function Items() {
   };
 
   const handleOpenUnit = (item) => {
-  setSelectedItem(item);
-    const unitId = Object.keys(unitsDictionary).find((key) => Number(key) === item.measuring_unit.id);
-    setUnit(item.measuring_unit.measuring_unit);
-  setOpenUnit(true);
-};
+    setSelectedItem(item);
+    setUnitName(item.measuring_unit.measuring_unit);
+    setOpenUnit(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -81,16 +81,13 @@ function Items() {
   };
 
   const handleUnitChange = (event, value) => {
-    console.log(value)
     const unitId =  value.id;
-    setUnit(unitId);
+    setUnit(unitId)
 };
 
   const handleFormSubmitUnit = (event) => {
     event.preventDefault();
-    console.log(selectedItem)
-    console.log(unit)
-    const updatedItem = { ...selectedItem, measuring_unit: unit };
+    const updatedItem = { ...selectedItem, measuring_unit: unit, item_location: selectedItem.item_location.id };
 
     API.put(`/item/${selectedItem.id}/`, updatedItem)
       .then(() => {
@@ -107,7 +104,7 @@ function Items() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const updatedItem = { ...selectedItem, quantity: quantity};
+    const updatedItem = { ...selectedItem, quantity: quantity, measuring_unit: selectedItem.measuring_unit.id, item_location: selectedItem.item_location.id};
 
     API.put(`/item/${selectedItem.id}/`, updatedItem)
       .then(() => {
@@ -395,7 +392,6 @@ function Items() {
                   renderInput={(params) => (
                     <TextField {...params} label="Unit" placeholder="Select a unit" />
                   )}
-                  value={unit}
                   sx={{ width: 200 }}
                   onChange={handleUnitChange}
                 />

@@ -68,7 +68,7 @@ const updateItemQuantity = (itemId, newQuantity) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const adjustmentValue = adjustmentType === "in" ? quantity : -quantity;
-    const updatedItem = { ...selectedItem, quantity: selectedItem.quantity + adjustmentValue };
+    const updatedItem = { ...selectedItem, quantity: selectedItem.quantity + adjustmentValue, item_location: selectedItem.item_location.id, measuring_unit: selectedItem.measuring_unit.id };
 
     API.put(`/item/${selectedItem.id}/`, updatedItem)
       .then(() => {
